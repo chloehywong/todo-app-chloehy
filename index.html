@@ -1,0 +1,28 @@
+<html>
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>My Todo List</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;700&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+    <h1>
+      My Todo List📝
+    </h1>
+    <div class='container'>
+      <div class='task-textarea'>
+        <label for='task-input'>Tasks</label>
+        <input type='text' id='task-input' placeholder='e.g. Grocery Shopping' />
+      </div>
+      <button id="add-task-btn" class="add-btn">Add</button>
+    </div>
+    <ul class='task-list' id='task-list'>
+    </ul>
+    <script src="index.js" type="module"></script>
+  </body>
+</html>
