@@ -34,7 +34,7 @@ input[type="text"] {
 }
 
 .task {
-  width: auto;
+  width: 50%;
   list-style-type: none;
   font-size: 16px;
   padding: 5px 10px;
@@ -45,13 +45,14 @@ input[type="text"] {
   justify-content: space-between;
   align-items: center;
   position: relative;
+  gap: 10px;
 }
 
 .task-list {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   gap: 10px;
-  margin: 20px auto;
 }
 
 label {
@@ -104,4 +105,18 @@ label {
   width: 15px;
   height: 15px;
   background-color: white;
+}
+
+.task-comment-area {
+  width: 90%;  
+  border: none; 
+  font-size: .75em;
+  padding: 8px 5px;
+  margin: 5px 10px 5px 5px;
+}
+
+
+.session-title {
+  width: 50%;
+  border-bottom: 3px solid black;
 }
