@@ -14,16 +14,14 @@
     <h1>
       My Todo List📝
     </h1>
-    <div class='container'>
+    <form action='' class='container' id="todo-form">
       <div class='task-textarea'>
         <label for='task-input'>Tasks</label>
         <input type='text' id='task-input' placeholder='e.g. Grocery Shopping' />
       </div>
-      <button id='add-task-btn' class='add-btn'>Add</button>
-    </div>
-    <ul class='task-list' id='task-list-todo'>
-    </ul>
-    <ul class='task-list' id='task-list-done'>
+      <button id='add-task-btn' class='add-btn' type="submit">Add</button>
+    </form>
+    <ul class='task-list' id='task-list'>
     </ul>
     <script src="index.js" type="module"></script>
   </body>

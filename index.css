@@ -108,11 +108,12 @@ label {
 }
 
 .task-comment-area {
-  width: 90%;  
-  border: none; 
+  width: 70%; 
+  border-bottom: 2px solid pink;
   font-size: .75em;
   padding: 8px 5px;
   margin: 5px 10px 5px 5px;
+  color: grey;
 }
 
 
