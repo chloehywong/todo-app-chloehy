@@ -1,8 +1,10 @@
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
-let taskData = [];
+// let taskData = [];
 const todoForm = document.getElementById('todo-form');
 const taskInput = document.getElementById('task-input');
+
+let taskData = JSON.parse(localStorage.getItem('tasks')) || []
 
 
 document.addEventListener('input', (e) => {
@@ -43,6 +45,7 @@ function addTask() {
         render()
         taskInput.value = ''
     }
+    localStorage.setItem('tasks', JSON.stringify(taskData))
 }
 
 function deleteTask(taskId) {
@@ -52,6 +55,7 @@ function deleteTask(taskId) {
     taskData.splice(index1, 1)
 
     render()
+    localStorage.setItem('tasks', JSON.stringify(taskData))
 }
 
 
@@ -63,6 +67,7 @@ function completeTask(taskId) {
     targetTaskObj.isComplete = !targetTaskObj.isComplete
 
     render()
+    localStorage.setItem('tasks', JSON.stringify(taskData))
 }
 
 function updateTask(taskId, el) {
@@ -72,6 +77,7 @@ function updateTask(taskId, el) {
     } else {
         task.title = el.textContent
     }
+    localStorage.setItem('tasks', JSON.stringify(taskData))
 }
 
 
