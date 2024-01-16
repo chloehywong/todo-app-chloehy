@@ -3,8 +3,38 @@ import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 // let taskData = [];
 const todoForm = document.getElementById('todo-form');
 const taskInput = document.getElementById('task-input');
+let draggableTodo = null; 
 
 let taskData = JSON.parse(localStorage.getItem('tasks')) || []
+
+function dragStart() {
+    draggableTodo = this;
+    console.log('dragStart');
+}
+
+function dragEnd() {
+    draggableTodo = null;
+    console.log('dragEnd')
+}
+
+function dragOver(e) {
+    e.preventDefault();
+    console.log('dragOver')
+}
+
+function dragEnter() {
+    console.log('dragEnter')
+}
+
+function dragLeave() {
+    console.log('dragLeave')
+}
+
+function dragDrop() {
+    this.appendChild(draggableTodo);
+    console.log('dragDrop')
+}
+
 
 
 document.addEventListener('input', (e) => {
@@ -82,20 +112,20 @@ function updateTask(taskId, el) {
 
 
 function getTaskListHtml() {
-    let html = ''
+    let allStatus = ''
     let completeColour = ''
 
     if (taskData.length === 0) {
-        html += `
+        allStatus += `
         <h2>Are you planning to chill today? if not, add some tasks :)</h2>
         `
     } else {
         // Render the todo tasks
         let todoTasks = taskData.filter((task) => {return task.isComplete === false})
-        html += `<h2 class='session-title'>To-do</h2>`
+        allStatus += `<h2 class='session-title'>To-do</h2><div class='status'>`
         for (let task of todoTasks) {
-            html += `
-            <div id="${task.uuid}" class='task'>
+            allStatus += `
+            <div id="${task.uuid}" class='task' draggable='true'>
                 <button class="complete-btn" data-complete='${task.uuid}'></button>
                 <span contenteditable class='text-task' data-update='${task.uuid}'>${task.title}</span>
                 <span contenteditable class='task-comment-area' data-update='${task.uuid}'>${task.description}</span>
@@ -103,14 +133,13 @@ function getTaskListHtml() {
             </div>
             `
         }
-    
-        // Render the done tasks
-        let doneTasks = taskData.filter((task) => {return task.isComplete === true})
-        html += `<h2 class='session-title'>Done</h2>`
-        for (let task of doneTasks) {
-            completeColour = "pink"
-            html += `
-            <div id="${task.uuid}" class='task'>
+        allStatus += `</div>`
+
+        let inprogressTasks = taskData.filter((task) => {return task.isComplete === true})
+        allStatus += `<h2 class='session-title'>In-Progress</h2><div class='status'>`
+        for (let task of inprogressTasks) {
+            allStatus += `
+            <div id="${task.uuid}" class='task' draggable='true'>
                 <button class="complete-btn" data-complete='${task.uuid}' style='background-color:${completeColour}'></button>
                 <span contenteditable class='text-task' data-update='${task.uuid}'>${task.title}</span>
                 <span contenteditable class='task-comment-area' data-update='${task.uuid}'>${task.description}</span>
@@ -118,13 +147,48 @@ function getTaskListHtml() {
             </div>
             `
         }
+        allStatus += `</div>`
+    
+        // Render the done tasks
+        let doneTasks = taskData.filter((task) => {return task.isComplete === true})
+        allStatus += `<h2 class='session-title'>Done</h2><div class='status'>`
+        for (let task of doneTasks) {
+            completeColour = "pink"
+            allStatus += `
+            <div id="${task.uuid}" class='task' draggable='true'>
+                <button class="complete-btn" data-complete='${task.uuid}' style='background-color:${completeColour}'></button>
+                <span contenteditable class='text-task' data-update='${task.uuid}'>${task.title}</span>
+                <span contenteditable class='task-comment-area' data-update='${task.uuid}'>${task.description}</span>
+                <button class='close-btn' data-delete='${task.uuid}'>x</button>
+            </div>
+            `
+        }
+        allStatus += `</div>`
     }
-    return html
+    return allStatus
 }
 
+function addEventDragAndDropListeners() {
+    let todos = document.querySelectorAll('.task');
+    let statusArea = document.querySelectorAll('.status');
+    console.log(todos)
+    console.log(statusArea)
+    todos.forEach((todo) => {
+        todo.addEventListener('dragstart', dragStart);
+        todo.addEventListener('dragend', dragEnd);
+    })
+    statusArea.forEach((status) => {
+        console.log(status)
+        status.addEventListener('dragover', dragOver);
+        status.addEventListener('dragenter', dragEnter);
+        status.addEventListener('dragleave', dragLeave);
+        status.addEventListener('drop', dragDrop);
+    })
+}
 
 function render() {
-    document.getElementById('task-list').innerHTML = getTaskListHtml()
+    document.getElementById('todo-container').innerHTML = getTaskListHtml()
+    addEventDragAndDropListeners()
 }
 
 render()
